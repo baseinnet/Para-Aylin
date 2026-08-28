@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Una Carta Especial</title>
+  <title>Una Carta Especial con Sello</title>
   <style>
     * {
       box-sizing: border-box;
@@ -16,127 +16,212 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      /* Fondo GIF proporcionado anteriormente */
       background: url('https://i.pinimg.com/originals/ab/23/9c/ab239cb58e216e5977af71f721b34187.gif') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Georgia', serif;
-      overflow: hidden;
+      overflow: hidden; /* Evita scroll en el body durante la animación */
     }
 
-    /* Fondo con capa para suavizar e integrar la carta */
     .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
+      min-height: 100vh;
       width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.5); /* Capa oscura para dar contraste */
+      backdrop-filter: blur(3px);
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    /* Animación del Corazón Llenándose */
-    .heart-loader {
+      padding: 20px;
       position: relative;
-      width: 80px;
-      height: 80px;
-      cursor: pointer;
-      animation: pulse 1.2s infinite;
     }
 
-    .heart-shape {
+    /* =========================================
+       ANIMACIÓN DEL CORAZÓN (PANTALLA DE CARGA)
+       ========================================= */
+    .heart-loader {
+      width: 140px;
+      height: 140px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: pulse 1.2s infinite ease-in-out;
+      position: absolute; /* Para centrarlo sobre todo */
+    }
+
+    .heart-svg {
       width: 100%;
       height: 100%;
-      background-color: rgba(255, 255, 255, 0.3);
-      clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
-      transform: scale(3.5);
-      position: relative;
-      overflow: hidden;
+      filter: drop-shadow(0 0 10px rgba(230, 57, 70, 0.7));
     }
 
     .heart-fill {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 0%;
-      background: #e63946;
-      animation: fillHeart 3s forwards ease-in-out;
+      animation: fillUp 3s forwards ease-in-out;
     }
 
-    @keyframes fillHeart {
-      0% { height: 0%; }
-      100% { height: 100%; }
+    @keyframes fillUp {
+      0% { height: 0%; y: 24px; }
+      100% { height: 100%; y: 0px; }
     }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+      50% { transform: scale(1.08); }
     }
 
-    /* Contenedor y Animación de la Carta */
+    /* =========================================
+       DISEÑO DE LA CARTA Y EL SELLO
+       ========================================= */
     .card-container {
-      display: none;
+      display: none; /* Oculta al inicio */
       opacity: 0;
-      transform: translateY(30px) scale(0.9);
-      animation: fadeInCard 1.2s 3.2s forwards cubic-bezier(0.25, 1, 0.5, 1);
-      max-width: 500px;
-      width: 90%;
-      padding: 20px;
+      transform: translateY(20px) scale(0.95);
+      animation: fadeInCard 1s ease-out forwards;
+      width: 100%;
+      max-width: 650px;
+      margin: auto;
+      z-index: 10;
     }
 
     .card {
-      background: rgba(255, 253, 248, 0.92);
-      backdrop-filter: blur(8px);
-      border: 3px double #b8860b;
-      border-radius: 12px;
-      padding: 35px 25px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(184, 134, 11, 0.2);
+      background: rgba(255, 253, 248, 0.97); /* Color papel pergamino suave */
+      backdrop-filter: blur(10px);
+      border: 2px solid #d4af37; /* Borde dorado */
+      border-radius: 16px;
+      padding: 40px 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(212, 175, 55, 0.15);
       text-align: center;
       color: #2c2c2c;
       position: relative;
+      max-height: 85vh; /* Altura máxima adaptable */
+      display: flex;
+      flex-direction: column;
+      overflow: hidden; /* Importante para el borde interno */
     }
 
-    /* Borde interno decorativo */
+    /* Borde interno decorativo dorado */
     .card::before {
       content: '';
       position: absolute;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      bottom: 10px;
-      border: 1px solid #d4af37;
-      border-radius: 8px;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      border: 1px dashed #b8860b;
+      border-radius: 10px;
       pointer-events: none;
+      z-index: 1; /* Detrás del sello y texto */
     }
 
+    /* --- EL SELLO EN LA ESQUINA --- */
+    .card-seal {
+      position: absolute;
+      top: 25px; /* Ajustado para que quepa bien dentro del borde */
+      right: 25px;
+      width: 70px; /* Tamaño del sello */
+      height: 70px;
+      background: url('https://i.pinimg.com/736x/6a/4b/55/6a4b552068ca9e7737c2204f2726618c.jpg') no-repeat center center;
+      background-size: cover;
+      border-radius: 50%; /* Hace la imagen circular */
+      box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(139, 0, 0, 0.3);
+      border: 2px solid #8b0000; /* Borde color cera roja */
+      z-index: 5; /* Por encima de la carta y el borde interno */
+      transform: rotate(5deg); /* Ligera rotación para naturalidad */
+    }
+
+    /* Título de la carta */
     .card h1 {
-      font-size: 1.8rem;
+      font-size: 2.2rem;
       color: #8b0000;
-      margin-bottom: 15px;
-      font-family: 'Brush Script MT', cursive, serif;
+      margin-bottom: 25px;
+      margin-right: 80px; /* Espacio para que el título no choque con el sello */
+      letter-spacing: 1px;
+      flex-shrink: 0;
+      text-align: left; /* Alineado a la izquierda para el sello */
+      z-index: 2;
+    }
+
+    /* Contenedor del texto con scroll */
+    .card-body {
+      overflow-y: auto;
+      padding-right: 15px;
+      text-align: justify;
+      z-index: 2;
+    }
+
+    /* Estilo de la barra de desplazamiento */
+    .card-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .card-body::-webkit-scrollbar-track {
+      background: rgba(212, 175, 55, 0.1);
+      border-radius: 10px;
+    }
+    .card-body::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 10px;
     }
 
     .card p {
-      font-size: 1.05rem;
-      line-height: 1.6;
+      font-size: 1.15rem;
+      line-height: 1.8;
       color: #333;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
+    /* Firma final */
     .card .signature {
-      font-family: 'Brush Script MT', cursive, serif;
       font-size: 1.4rem;
       color: #8b0000;
       text-align: right;
-      margin-top: 15px;
-      padding-right: 10px;
+      margin-top: 25px;
+      font-weight: bold;
+      flex-shrink: 0;
+      z-index: 2;
     }
 
+    /* Animación de entrada de la carta */
     @keyframes fadeInCard {
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
+      }
+    }
+
+    /* =========================================
+       RESPONSIVE
+       ========================================= */
+    @media (max-width: 600px) {
+      .heart-loader {
+        width: 110px;
+        height: 110px;
+      }
+
+      .card {
+        padding: 25px 15px;
+        max-height: 90vh;
+      }
+
+      .card-seal {
+        width: 55px;
+        height: 55px;
+        top: 20px;
+        right: 20px;
+      }
+
+      .card h1 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        margin-right: 60px; /* Ajuste espacio sello móvil */
+      }
+
+      .card p {
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .card .signature {
+        font-size: 1.2rem;
+        margin-top: 15px;
       }
     }
   </style>
@@ -144,35 +229,64 @@
 <body>
 
   <div class="overlay">
+    <!-- 1. Pantalla de carga: Corazón en SVG que se llena -->
     <div class="heart-loader" id="loader">
-      <div class="heart-shape">
-        <div class="heart-fill"></div>
-      </div>
+      <svg class="heart-svg" viewBox="0 0 24 24">
+        <defs>
+          <mask id="heart-mask">
+            <path fill="#ffffff" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </mask>
+        </defs>
+
+        <path fill="rgba(255, 255, 255, 0.35)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        <!-- Relleno animado -->
+        <rect class="heart-fill" x="0" y="0" width="24" height="100%" fill="#e63946" mask="url(#heart-mask)" />
+      </svg>
     </div>
 
+    <!-- 2. La Carta -->
     <div class="card-container" id="cardContainer">
       <div class="card">
-        <h1>Para Alguien Especial</h1>
-        <p>
-          Hay momentos y personas que hacen que todo tenga un brillo único. 
-          Esta carta es solo un pequeño detalle para recordarte lo mucho que vales 
-          y lo especial que es compartir el camino contigo.
-        </p>
-        <p>
-          Gracias por estar presente y por llenar cada instante de sonrisas.
-        </p>
-        <div class="signature">Con mucho cariño, <br>♥</div>
+        
+
+        <div class="card-seal"></div>
+
+        <h1>Para Mi Aylin 💕</h1>
+        
+
+        <div class="card-body">
+          <p>
+            Mi niña quiero decirte que eres la mujer mas hermosa, bella, linda, increible, cariñosa, eres simplemente la mejor mujer del mundo, eres tan lindisiimaaaaaa, bellisimaaaa, no puedo describir lo hermosa y bella que eres, me encanta ser tu novio y que tu seas mi novia, siempre que dormimos me encanta escuchar tu voz, tu respiracion, me haces sentir como si estuviera contigo, estar contigo me hace sentir demasiado feliz, me encanta pasar tiempo contigo, me encanta todoooo contigo
+          </p>
+          <p>
+            Me encanta tenerte a mi lado, que seas mia, mi princesa, mi niña, mi bebita, mi muñequita, mi mami, mi novia, mi futura esposa JEJE, mi mundo, mi mujer, mi linda y bella aylin, me encantas demasiadooo no puedo explicarlo con unas simples palabrasss eres lo mejor que me ha dado este mundoooo eres demasiado bella, tienes tan hermosos sentimientos, eres tan graciosa, eres tan preciosamente perfectaaaa
+          </p>
+          <p>
+            Desde que te conoci me has hecho sentir tan feliz, me encanta la forma en la que hablas, te miras, me hablas, me amas, yo confio en ti al 100% ni a mi mamá le confio tanto como a ti lo hago, eres todo de verdad todo para mi, no me imagino una vida sin ti porque no la quiero, eres demasiado linda y bella y todooo eres todooo enserio, me gusta tu carita tan linda, tus labios, tus ojitos, tus cejas, tus pestañas, tu nariz, tu pelo, toodooooooooo estas bien preciosaaa
+          </p>
+          <p>
+            Sabes algo?, no importa qué tan largo o difícil sea el camino, siempre estare contigo, estare contigo en momentos tristes, felices, malos, buenos, todos los momentos que alla, porque contigo quiero todo, no solo quiero que seas un momento, quiero que seas para toda la vida, para esta y cien mil mas vidas, tener hijos, formar una familia y vivir todos en una casita bonita, con todo bonito como tu, quiero que tengas todo lo del mundo porque te lo mereces mi niña hermosa, quiero que seamos eternos los 2 y estemos felices para siempre, que tu seas mi princesa y yo tu principe :3
+          </p>
+          <p>
+            Gracias por tu paciencia, gracias por aguantar mis enojos, mis celos, por cosas que simplemente me molestan o me duelen, gracias por ser paciente y tratar de estar conmigo aunq yo sea el tonto q siempre se siente mal, pero esq no lo hago nomas por que si, tienen una razon y lo admito me duele hasta lo mas minimo q sea, quiero que seas mia y perdon si soy un pesado y tonto, pero prometo que nunca me aburrire y siempre te amara, porque mis ojos jamas voltearan a ver a otra mujer que no seas tu, mis ojos siempre te ven, en mi fondo de pantalla, en mi galeria, en mis fotos de todos lados, en mi mente, en mi corazon siempre estaras en todos lados mi princesita hermosa
+          </p>
+        </div>
+
+        <!-- Firma -->
+        <div class="signature">Con mucho cariño y amor, Tu novio Edu :3<br>♥</div>
       </div>
     </div>
   </div>
 
   <script>
-    // Transición del corazón a la carta al terminar el llenado
+    // Lógica para cambiar de la animación de carga a la carta
     setTimeout(() => {
+      // Ocultar el corazón
       document.getElementById('loader').style.display = 'none';
+      // Mostrar la carta e iniciar su animación de entrada
       const card = document.getElementById('cardContainer');
       card.style.display = 'block';
-    }, 3000);
+    }, 3000); // 3000ms = 3 segundos (duración de la animación del corazón)
   </script>
 
 </body>
