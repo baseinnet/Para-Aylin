@@ -30,7 +30,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 10px;
+      padding: 12px;
       position: relative;
     }
 
@@ -68,15 +68,15 @@
     }
 
     /* =========================================
-       DISEÑO DE LA CARTA (MÁS ANCHA EN MÓVIL)
+       DISEÑO DE LA CARTA ALINEADA
        ========================================= */
     .card-container {
       display: none;
       opacity: 0;
       transform: translateY(20px) scale(0.95);
       animation: fadeInCard 1s ease-out forwards;
-      width: 95%;
-      max-width: 850px; /* Ancho extendido tipo PC */
+      width: 100%;
+      max-width: 850px;
       margin: auto;
       z-index: 10;
     }
@@ -86,18 +86,18 @@
       backdrop-filter: blur(10px);
       border: 2px solid #d4af37;
       border-radius: 16px;
-      padding: 35px 40px;
+      padding: 35px 35px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(212, 175, 55, 0.15);
       text-align: center;
       color: #2c2c2c;
       position: relative;
-      max-height: 85vh;
+      height: 82vh; /* Altura simétrica constante para evitar desalineamiento */
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
 
-    /* Borde interno decorativo */
+    /* Borde interno simétrico en todos los lados */
     .card::before {
       content: '';
       position: absolute;
@@ -141,9 +141,10 @@
     /* Contenedor del texto */
     .card-body {
       overflow-y: auto;
-      padding-right: 15px;
+      padding-right: 12px;
       text-align: justify;
       z-index: 2;
+      flex-grow: 1; /* Ocupa el espacio disponible alineando firma y bordes */
     }
 
     .card-body::-webkit-scrollbar {
@@ -169,7 +170,7 @@
       font-size: 1.3rem;
       color: #8b0000;
       text-align: right;
-      margin-top: 20px;
+      margin-top: 15px;
       font-weight: bold;
       flex-shrink: 0;
       z-index: 2;
@@ -183,20 +184,27 @@
     }
 
     /* =========================================
-       AJUSTES PARA CELULARES (EFECTO ANCHO)
+       AJUSTES PARA CELULARES
        ========================================= */
     @media (max-width: 600px) {
       .overlay {
-        padding: 5px; /* Aprovecha más pantalla a los lados */
+        padding: 8px;
       }
 
       .card-container {
-        width: 98vw; /* Ocupa casi todo el ancho de la pantalla del móvil */
+        width: 100%;
       }
 
       .card {
-        padding: 20px 18px;
-        max-height: 88vh;
+        padding: 22px 18px 18px 18px; /* Padding ajustado para balancear el margen inferior */
+        height: 85vh;
+      }
+
+      .card::before {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
       }
 
       .card-seal {
@@ -219,8 +227,8 @@
       }
 
       .card .signature {
-        font-size: 1.1rem;
-        margin-top: 12px;
+        font-size: 1.05rem;
+        margin-top: 10px;
       }
     }
   </style>
@@ -260,7 +268,7 @@
             Sabes algo?, no importa qué tan largo o difícil sea el camino, siempre estare contigo, estare contigo en momentos tristes, felices, malos, buenos, todos los momentos que alla, porque contigo quiero todo, no solo quiero que seas un momento, quiero que seas para toda la vida, para esta y cien mil mas vidas, tener hijos, formar una familia y vivir todos en una casita bonita, con todo bonito como tu, quiero que tengas todo lo del mundo porque te lo mereces mi niña hermosa, quiero que seamos eternos los 2 y estemos felices para siempre, que tu seas mi princesa y yo tu principe :3
           </p>
           <p>
-            Gracias por tu paciencia, gracias por aguantar mis enojos, mis celos, por cosas que simplemente me molestan o me duelen, gracias por ser paciente y tratar de estar conmigo aunq yo sea el tonto q siempre se siente mal, pero esq no lo hago nomas por que si, tienen una razon y lo admito me duele hasta lo mas minimo q sea, quiero que seas mia y perdon si soy un pesado y tonto, pero prometo que nunca me aburrire y siempre te amara, porque mis ojos jamas voltearan a ver a otra mujer que no seas tu, mis ojos siempre te ven, en mi fondo de pantalla, en mi galeria, en mis fotos de todos lados, en mi mente, en mi corazon siempre estaras en todos lados mi princesita hermosa
+            Gracias por tu paciencia, gracias por aguantar mis enojos, mis celos, por cosas que simplemente me molestan o me duelen, gracias por ser paciente y tratar de estar conmigo aunq yo sea el tonto q siempre se siente mal, pero esq no lo hago nomas por que si, tienen una razon y lo admito me duele hasta lo mas minimo q sea, quiero que seas mia y perdon si soy un pesado y tonto, pero prometo que nunca me aburrire y siempre te amara, porque mis ojos jamas voltearan a ver a otra mujer que no seas tu, mis ojos siempre te ven, en mirada, en mi fondo de pantalla, en mi galeria, en mis fotos de todos lados, en mi mente, en mi corazon siempre estaras en todos lados mi princesita hermosa
           </p>
         </div>
 
