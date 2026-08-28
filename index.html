@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Una Carta Especial</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('https://i.pinimg.com/originals/ab/23/9c/ab239cb58e216e5977af71f721b34187.gif') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Georgia', serif;
+      overflow: hidden;
+    }
+
+    /* Fondo con capa para suavizar e integrar la carta */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Animación del Corazón Llenándose */
+    .heart-loader {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      animation: pulse 1.2s infinite;
+    }
+
+    .heart-shape {
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.3);
+      clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+      transform: scale(3.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .heart-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      background: #e63946;
+      animation: fillHeart 3s forwards ease-in-out;
+    }
+
+    @keyframes fillHeart {
+      0% { height: 0%; }
+      100% { height: 100%; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Contenedor y Animación de la Carta */
+    .card-container {
+      display: none;
+      opacity: 0;
+      transform: translateY(30px) scale(0.9);
+      animation: fadeInCard 1.2s 3.2s forwards cubic-bezier(0.25, 1, 0.5, 1);
+      max-width: 500px;
+      width: 90%;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255, 253, 248, 0.92);
+      backdrop-filter: blur(8px);
+      border: 3px double #b8860b;
+      border-radius: 12px;
+      padding: 35px 25px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(184, 134, 11, 0.2);
+      text-align: center;
+      color: #2c2c2c;
+      position: relative;
+    }
+
+    /* Borde interno decorativo */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border: 1px solid #d4af37;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .card h1 {
+      font-size: 1.8rem;
+      color: #8b0000;
+      margin-bottom: 15px;
+      font-family: 'Brush Script MT', cursive, serif;
+    }
+
+    .card p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .card .signature {
+      font-family: 'Brush Script MT', cursive, serif;
+      font-size: 1.4rem;
+      color: #8b0000;
+      text-align: right;
+      margin-top: 15px;
+      padding-right: 10px;
+    }
+
+    @keyframes fadeInCard {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay">
+    <div class="heart-loader" id="loader">
+      <div class="heart-shape">
+        <div class="heart-fill"></div>
+      </div>
+    </div>
+
+    <div class="card-container" id="cardContainer">
+      <div class="card">
+        <h1>Para Alguien Especial</h1>
+        <p>
+          Hay momentos y personas que hacen que todo tenga un brillo único. 
+          Esta carta es solo un pequeño detalle para recordarte lo mucho que vales 
+          y lo especial que es compartir el camino contigo.
+        </p>
+        <p>
+          Gracias por estar presente y por llenar cada instante de sonrisas.
+        </p>
+        <div class="signature">Con mucho cariño, <br>♥</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Transición del corazón a la carta al terminar el llenado
+    setTimeout(() => {
+      document.getElementById('loader').style.display = 'none';
+      const card = document.getElementById('cardContainer');
+      card.style.display = 'block';
+    }, 3000);
+  </script>
+
+</body>
+</html>
