@@ -34,6 +34,9 @@
       position: relative;
     }
 
+    /* =========================================
+       ANIMACIÓN DEL CORAZÓN (PANTALLA DE CARGA)
+       ========================================= */
     .heart-loader {
       width: 140px;
       height: 140px;
@@ -64,13 +67,16 @@
       50% { transform: scale(1.08); }
     }
 
+    /* =========================================
+       DISEÑO DE LA CARTA (MÁS ANCHA EN MÓVIL)
+       ========================================= */
     .card-container {
       display: none;
       opacity: 0;
       transform: translateY(20px) scale(0.95);
       animation: fadeInCard 1s ease-out forwards;
       width: 95%;
-      max-width: 850px;
+      max-width: 850px; /* Ancho extendido tipo PC */
       margin: auto;
       z-index: 10;
     }
@@ -91,6 +97,7 @@
       overflow: hidden;
     }
 
+    /* Borde interno decorativo */
     .card::before {
       content: '';
       position: absolute;
@@ -104,6 +111,7 @@
       z-index: 1;
     }
 
+    /* SELLO EN LA ESQUINA */
     .card-seal {
       position: absolute;
       top: 20px;
@@ -130,6 +138,7 @@
       z-index: 2;
     }
 
+    /* Contenedor del texto */
     .card-body {
       overflow-y: auto;
       padding-right: 15px;
@@ -173,23 +182,45 @@
       }
     }
 
-    /* FORZAR VISTA ANCHA EN MÓVILES (ROTACIÓN AUTOMÁTICA) */
-    @media (max-width: 600px) and (orientation: portrait) {
-      .card-container {
-        transform: rotate(90deg) scale(0.8);
-        width: 85vh;
-        max-width: none;
-      }
-      
-      .card {
-        max-height: 90vw;
+    /* =========================================
+       AJUSTES PARA CELULARES (EFECTO ANCHO)
+       ========================================= */
+    @media (max-width: 600px) {
+      .overlay {
+        padding: 5px; /* Aprovecha más pantalla a los lados */
       }
 
-      @keyframes fadeInCard {
-        to {
-          opacity: 1;
-          transform: rotate(90deg) scale(0.85);
-        }
+      .card-container {
+        width: 98vw; /* Ocupa casi todo el ancho de la pantalla del móvil */
+      }
+
+      .card {
+        padding: 20px 18px;
+        max-height: 88vh;
+      }
+
+      .card-seal {
+        width: 50px;
+        height: 50px;
+        top: 15px;
+        right: 15px;
+      }
+
+      .card h1 {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+        margin-right: 55px;
+      }
+
+      .card p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 14px;
+      }
+
+      .card .signature {
+        font-size: 1.1rem;
+        margin-top: 12px;
       }
     }
   </style>
